@@ -1,16 +1,18 @@
-import datetime
+from datetime import datetime
 import time
 
 current = None
+mode = int(input("1. Heure actuelle\n2. Heure spécifiée :\n"))
 
 def current_time():
-    current = datetime.datetime.now().strftime("%H:%M:%S")
+    current = datetime.now().strftime("%H:%M:%S")
     print(current, end = "\r")
 
-#def set_time(current):
+def set_time(current):
+    current = datetime(int(input("Donner une heure"))).strftime("%H:%M:%S")
+    print(current, end = "\r")
 
 def counting():
-    mode = int(input("1. Heure actuelle\n2. Heure spécifiée :\n "))
     if mode == 1 : 
         while True :
             current_time()
@@ -22,7 +24,7 @@ def counting():
     else :
         print("Mauvaise entrée")
 
-counting()
+
 
     
 
