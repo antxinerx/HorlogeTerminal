@@ -1,8 +1,9 @@
-
 from datetime import datetime ,  timedelta
 import time
+import keyboard
 
 current = None
+is_paused = False
 
 
 def current_time():
@@ -34,22 +35,37 @@ def counting():
     alarm = set_alarm_and_format()
     if mode == 1 : 
         while True :
-            current_time()
-            if alarm.strftime("%H:%M:%S") == current :
-                 print("===== ALARME ! =====")
-            time.sleep(1)
+            stop_time()
+            if is_paused == False :
+                current_time()
+                stop_time()
+                if alarm.strftime("%H:%M:%S") == current :
+                    print("===== ALARME ! =====")
+                time.sleep(1)
+            else :
+                print("Horloge en pause...")
+
     elif mode == 2 :
         custom_time = set_time()
         while True :
-                custom_time += timedelta(seconds= 1)
-                print(custom_time.strftime("%H:%M:%S"), end = "\r")
-                if alarm.strftime("%H:%M:%S") == custom_time.strftime("%H:%M:%S"):
-                    print("===== ALARME ! =====")
-                time.sleep(1)
+                stop_time()
+                if is_paused == False :
+                    custom_time += timedelta(seconds= 1)
+                    print(custom_time.strftime("%H:%M:%S"), end = "\r")
+                    if alarm == custom_time:
+                        print("===== ALARME ! =====")
+                    time.sleep(1)
+                else : 
+                     print("Horloge en pause...")
+                     
     else :
         print("Mauvaise entrée")
 
-def stop_time()
+def stop_time():
+    global is_paused
+    if keyboard.is_pressed("space"): 
+        is_paused = not is_paused
+        time.sleep(0.2)
 
 
 counting()
